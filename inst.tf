@@ -12,6 +12,11 @@ resource "aws_instance" "jenk" {
   associate_public_ip_address = true
   private_ip = "10.244.0.20"
  
+  # This is where we configure the instance with ansible-playbook  
+  provisioner "local-exec" {
+    command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key /home/ubuntu/olrudenk.pem -i '${aws_instance.jenk.public_ip},' jenk.yaml"
+    }
+ 
 
   connection {
     user = "ubuntu"
