@@ -1,3 +1,4 @@
+//Confirm the connection of Jenkins on the Web (specify the password of result.stdout)
 - hosts: all
   gather_facts: False
   become: yes
