@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from collections import defaultdict
 import boto3
+import sys
 
 ec2 = boto3.resource("ec2", region_name="eu-west-2")
 
@@ -28,5 +29,6 @@ for instance in running_instances:
 attributes = ['Name', 'Type', 'State', 'Private IP', 'Public IP', 'Launch Time']
 for instance_id, instance in ec2info.items():
     for key in attributes:
+        sys.stdout = open('output.txt','a')
         print("{0}: {1}".format(key, instance[key]))
     print("------")
