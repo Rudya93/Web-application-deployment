@@ -4,13 +4,13 @@ provider "aws" {
   secret_key  = "${var.secret_key}"
   region      = "${var.region}"
 }
-resource "aws_instance" "jenks" {
+resource "aws_instance" "jenk" {
   ami           = "${var.ami}"
   instance_type = "t2.micro"
   subnet_id = "${var.subn}"
   key_name = "${var.key}"
   associate_public_ip_address = true
-  private_ip = "10.244.0.10"
+  private_ip = "10.244.0.20"
  
 
   connection {
@@ -19,7 +19,7 @@ resource "aws_instance" "jenks" {
   }
 
   tags = {
-    Name = "olrudenk_swarm-master"
+    Name = "olrudenk_jenk"
   }
 }
 
