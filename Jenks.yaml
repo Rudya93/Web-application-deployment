@@ -1,47 +1,54 @@
-- name: install wget
-  yum:
-    name: wget
-    state: present
+- hosts: all
+  gather_facts: False
+  become: yes
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
 
-- name: install openjdk
-  yum:
-    name: java-1.8.0-openjdk
-    state: present
+  - name: install wget
+    apt:
+      name: wget
+      state: present
 
-- name: download jenkins.repo
-  get_url:
-    url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
-    dest: /etc/yum.repos.d/jenkins.repo
+  - name: install openjdk
+    apt:
+      name: java-1.8.0-openjdk
+      state: present
 
-- name: import jenkins key
-  rpm_key:
-    state: present
-    key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+  - name: download jenkins.repo
+    get_url:
+      url: http://pkg.jenkins.io/debian-stable binary/
+      dest: /etc/apt/sources.list.d/jenkins.list
 
-- name: install jenkins
-  yum:
-    name: jenkins
-    state: present
+  - name: import jenkins key
+    rpm_key:
+      state: present
+      key: https://pkg.jenkins.io/debian/jenkins-ci.org.key
 
-- name: start jenkins
-  systemd:
-    name: jenkins
-    state: started
+  - name: install jenkins
+    apt:
+      name: jenkins
+      state: present
 
-- name: enable jenkins
-  systemd:
-    name: jenkins
-    enabled: true
+  - name: start jenkins
+    systemd:
+      name: jenkins
+      state: started
 
-- name: sleep for 30 seconds and continue with play
-  wait_for: timeout=30
-  delegate_to: localhost
+  - name: enable jenkins
+    systemd:
+      name: jenkins
+      enabled: true
 
-- name: init password jenkin
-  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-  changed_when: false
-  register: result
+  - name: sleep for 30 seconds and continue with play
+    wait_for: timeout=30
+    delegate_to: localhost
 
-- name: print init password jenkins
-  debug:
-    var: result.stdout
+  - name: init password jenkin
+    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    changed_when: false
+    register: result
+
+  - name: print init password jenkins
+    debug:
+      var: result.stdout
