@@ -1,2 +1,4 @@
 # Web-application-deployment
-Setup Jenkins on separate instance via terraform and ansible. Write simple python web application which outputs current instance hostname and its memory footprint. Configure application deployment on cluster
+1. Setup Jenkins on separate instance via terraform and ansible. 
+2. Write simple python web application which outputs current instance hostname and its memory footprint. 
+3. Configure application deployment on cluster https://github.com/Rudya93/Terraform_Swarm
