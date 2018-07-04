@@ -14,13 +14,13 @@ resource "aws_instance" "jenk" {
  
   # This is where we configure the instance with ansible-playbook  
   provisioner "local-exec" {
-    command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key /home/ubuntu/olrudenk.pem -i '${aws_instance.jenk.public_ip},' jenk.yaml"
+    command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key "${var.pk}" -i '${aws_instance.jenk.public_ip},' jenk.yaml"
     }
  
 
   connection {
     user = "ubuntu"
-    private_key = "${file("/home/ubuntu/olrudenk.pem")}"
+    private_key = "${file("${var.pk}")}"
   }
 
   tags = {
