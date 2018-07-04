@@ -1,4 +1,3 @@
-//Confirm the connection of Jenkins on the Web (specify the password of result.stdout)
 - hosts: all
   gather_facts: False
   become: yes
@@ -13,18 +12,20 @@
 
   - name: install openjdk
     apt:
-      name: java-1.8.0-openjdk
+      name: openjdk-8-jdk
       state: present
 
   - name: download jenkins.repo
-    get_url:
-      url: http://pkg.jenkins.io/debian-stable binary/
-      dest: /etc/apt/sources.list.d/jenkins.list
+    shell: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 
   - name: import jenkins key
-    rpm_key:
+    apt_key:
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
       state: present
-      key: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+
+  - name: Run the equivalent of "apt-get update" as a separate step
+    apt:
+      update_cache: yes
 
   - name: install jenkins
     apt:
@@ -53,3 +54,11 @@
   - name: print init password jenkins
     debug:
       var: result.stdout
+
+  - name: Get my public IP from ipify.org
+    ipify_facts:
+
+  - name: URL to the web aplication
+    debug: msg='{{ ipify_public_ip }}'
+
+#Confirm the connection of Jenkins on the Web (specify the password of result.stdout)
