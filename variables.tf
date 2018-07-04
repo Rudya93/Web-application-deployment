@@ -16,3 +16,6 @@ variable "key" {
 variable "subn" {
     default = "subn"
 }
+variable "pk" {
+    default = "/home/ubuntu/**.pem"
+}
