@@ -3,5 +3,5 @@ import sys
 import socket
 import psutil
 sys.stdout = open('output.txt','a')
-print(socket.gethostname())
-print(psutil.virtual_memory())
+print('Host: {0} Memory: {1}' .format(socket.gethostname(), psutil.virtual_memory()))
+
