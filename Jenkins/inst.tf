@@ -17,12 +17,7 @@ resource "aws_instance" "jenk" {
   provisioner "local-exec" {
     command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key '${var.pk}' -i '${aws_instance.jenk.private_ip},' jenk.yaml"
     }
-/*
-connection {
-    user = "ubuntu"
-    private_key = "${file("/home/ubuntu/olrudenk.pem")}"
- }
-*/
+
   tags = {
     Name = "olrudenk_jenk"
   }
