@@ -2,3 +2,4 @@
 1. Setup Jenkins on separate instance via terraform and ansible. 
 2. Write simple python web application which outputs current instance hostname and its memory footprint. 
 3. Configure application deployment on cluster https://github.com/Rudya93/Terraform_Swarm
+Application deployment configured via jenkis created in 1 task, using Jenkins plugin “Publish over SSH”
